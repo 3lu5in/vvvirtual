@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .google-logo {
+            margin-top: 150px;
+            width: 272px;
+        }
+
+        .search-container {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 40%;
+            height: 40px;
+            padding: 0 15px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            outline: none;
+        }
+
+        .autocomplete-suggestions {
+            position: absolute;
+            left: 30%;
+            top: 45px;
+            width: 40%;
+            background-color: #fff;
+            border: 1px solid #dfe1e5;
+            border-top: none;
+            box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
+            z-index: 1000;
+        }
+
+        .autocomplete-suggestion {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .autocomplete-suggestion:hover {
+            background-color: #f1f3f4;
+        }
+
+        .highlight {
+            color: #1a73e8;
+            font-weight: bold;
+        }
+
+        .buttons-container {
+            margin-top: 20px;
+        }
+
+        .search-button {
+            height: 36px;
+            padding: 0 16px;
+            font-size: 14px;
+            color: #5f6368;
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .search-button:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #dadce0;
+        }
+
+        .search-button:active {
+            background-color: #f8f9fa;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            border: 1px solid #dadce0;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" class="google-logo">
+
+    <div class="search-container">
+        <input type="text" id="search-input" class="search-bar" placeholder="Search Google or type a URL" onkeyup="showSuggestion()" onkeydown="handleEnter(event)">
+        <div id="autocomplete-list" class="autocomplete-suggestions"></div>
+    </div>
+
+    <div class="buttons-container">
+        <button class="search-button" onclick="performSearch()">Google Search</button>
+        <button class="search-button">I'm Feeling Lucky</button>
+    </div>
+
+    <script>
+        const suggestion = "it's my birthday!";
+
+        function showSuggestion() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const autocompleteList = document.getElementById('autocomplete-list');
+            autocompleteList.innerHTML = '';
+
+            if (suggestion.toLowerCase().startsWith(input) && input !== '') {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'autocomplete-suggestion';
+
+                // Highlight matching part
+                const startIndex = suggestion.toLowerCase().indexOf(input);
+                const endIndex = startIndex + input.length;
+
+                suggestionItem.innerHTML = 
+    suggestion.substring(0, startIndex) + 
+    `<span class="highlight">${suggestion.substring(startIndex, endIndex)}</span>` + 
+    suggestion.substring(endIndex);
+
+
+                suggestionItem.onclick = function() {
+                    window.location.href = 'page.html';
+                };
+
+                autocompleteList.appendChild(suggestionItem);
+            }
+        }
+
+        function performSearch() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+
+            if (input === suggestion.toLowerCase()) {
+                window.location.href = 'page.html'; // Direct the user to the desired page
+            } else {
+                document.body.innerHTML += '<div class="no-results" style="color: #333; font-size: 24px; margin-top: 20px;">Your search did not match any documents.</div>';
+            }
+        }
+
+        function handleEnter(event) {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
